@@ -1,0 +1,1 @@
+UPDATE recommendations SET done = TRUE where number IN (1 ,2, 48);
