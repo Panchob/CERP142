@@ -67,16 +67,20 @@ main {
 
 .recommendation-card {
   margin-bottom: 15px;
+  cursor: pointer;
+
+  &:hover{
+
+  }
 
   h3 {
-    font-size: 30px;
+    font-size: 25px;
   }
   
 
   p {
     font-family: $secondary-font;
     font-size: 18px;
-    color: #444444;
   }
 
   li {
@@ -93,7 +97,6 @@ main {
   color: #5a5959;
   font-size: 20px;
   text-transform: uppercase;
-  letter-spacing: 0.2em;
   margin-top: 100px;
 }
 
@@ -225,7 +228,7 @@ span {
 .stats-wrapper {
   height: 100vh;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 
@@ -244,4 +247,16 @@ span {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.ongoing {
+  color: rgb(216, 158, 51)
+}
+
+.done {
+  color: rgba(37, 146, 37, 0.719)
+}
+
+.not-started {
+  color: #444444
 }
