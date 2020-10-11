@@ -18,9 +18,6 @@
 .env.development.local
 .env.test.local
 .env.production.local
-.flaskenv
-venv
-__pycache__
 
 npm-debug.log*
 yarn-debug.log*
