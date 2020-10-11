@@ -17,7 +17,6 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "heroku-prebuild": "yarn install --production=false",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
