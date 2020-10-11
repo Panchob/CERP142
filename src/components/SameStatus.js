@@ -12,7 +12,7 @@ export class SameStatus extends Component {
 
   componentDidMount() {
     this.setState({isLoading: true});
-    fetch(`http://localhost:5000/recommendations/${this.state.status}`)
+    fetch(`https://cerp142-api.herokuapp.com/recommendations/${this.state.status}`)
       .then((response) => response.json())
       .then((data) => this.setState({recommendations: data.recommendations}))
     

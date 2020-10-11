@@ -61,7 +61,7 @@ export default class App extends Component {
   componentDidMount() {
 
     this.setState({isLoading:true})
-    fetch(`http://localhost:5000/sections`)
+    fetch(`https://cerp142-api.herokuapp.com/sections`)
       .then((res) => res.json())
       .then((data) => this.setState({sections: data.sections, isLoading: false}))
 
