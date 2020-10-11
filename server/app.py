@@ -3,11 +3,12 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 
+PORT = int(os.environ.get('PORT', 5000))
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JSON_AS_ASCII'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:61785@localhost:5432/CERP142_dev?client_encoding=UTF8'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 db = SQLAlchemy(app)
 CORS(app)
 
@@ -104,6 +105,33 @@ def fetch_notStarted():
         'recommendations': recommendations
     })
 
+@app.route('/stats')
+def calculate_stats():
+    recommendations = Recommendation.query.all()
+
+    stats = {
+        'done': 0,
+        'ongoing': 0,
+        'unsure': 0,
+        'notStarted': len(recommendations)
+    }
+
+    for r in recommendations:
+        if r.done:
+            stats['done'] += 1
+        elif r.ongoing:
+            stats['ongoing'] += 1
+        elif r.unsure:
+            stats['unsure'] += 1
+    
+
+    total = stats['done'] + stats['ongoing'] + stats['unsure']
+    stats['notStarted'] -= total
+
+    return jsonify({
+        'success': True,
+        'stats': stats
+    })
 
 
 if __name__ == "__main__":
