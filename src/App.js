@@ -9,26 +9,12 @@ export default class App extends Component {
     super()
     this.state = {
       open: false,
-      isLoading: false
+      isLoading: false,
+      stats: {},
+      sections: []
     }
 
     this.handleHamClick = this.handleHamClick.bind(this)
-  }
-
-  displayList = (recommandation) => {
-    
-    if (recommandation.liste !== undefined) {
-      return(
-        <ul>
-            { recommandation.liste.map((message, index) => {
-              return(
-                <li key={index}>{message}</li>
-              )
-          })}
-        </ul>
-
-      )
-    }
   }
 
   dateSinceRemission = () => {
@@ -58,27 +44,38 @@ export default class App extends Component {
     this.setState({open: !this.state.open})
   }
 
+  async fetchData() {
+    fetch(`https://cerp142-api.herokuapp.com/sections`)
+      .then((res) => res.json())
+      .then((data) => this.setState({sections: data.sections}))
+
+    fetch(`https://cerp142-api.herokuapp.com/stats`)
+      .then((res) => res.json())
+      .then((data) => this.setState({stats: data.stats}))
+
+    
+  }
+
   componentDidMount() {
 
     this.setState({isLoading:true})
-    fetch(`https://cerp142-api.herokuapp.com/sections`)
-      .then((res) => res.json())
-      .then((data) => this.setState({sections: data.sections, isLoading: false}))
-
+    this.fetchData()
+      .then(() => this.setState({isLoading: false}))
   }
 
   render () {
 
-    if(this.state.isLoading || this.state.sections === undefined) {
+    if(this.state.isLoading) {
       return(
         <h1>LOADING...</h1>
       )
     }
 
     const sections = this.state.sections;
+    const stats = this.state.stats;
     console.log(this.state.sections)
     return (
-      <div className="App">
+      <div className="App grid">
         <div id="side" className={`sidebar ${this.state.open ? "opens" : ""}`}>
           <div className="section-links">
             {sections.map((s, i) => {
@@ -88,52 +85,80 @@ export default class App extends Component {
             })}
           </div>
         </div>
-        <main id="main" className={this.state.open ? "sidebar-open": ""}>
-          <Hamburger handleHamClick={() => this.handleHamClick()}/>
-          <section className="mission">
-            <h1>CERP142</h1>
-          </section>
-          <section className="stats-wrapper">
-            <h1>Nombre de jours depuis la remise du rapport: {this.dateSinceRemission()}</h1>
-            <div className="stats-grid">
-              <div className="stats-card not-started">
-                <h1>Pas commencé</h1>
-                <h1>99</h1>
-              </div>
-              <div className="stats-card ongoing">
-                <h1>En cours</h1>
-                <h1>40</h1>
-              </div>
-              <div className="stats-card done">
-                <Link to={{
-                  pathname:"status",
-                  state: {status: "done"}
-                }} >Complétées</Link>
-                <h1>3</h1>
-              </div>
+        <div className="banner">
+        </div>
+        <Hamburger handleHamClick={() => this.handleHamClick()}/>
+        <section className="a-propos">
+          <p>
+            En tant que regroupement formé d’anciens membres de l’équipe de la Commission d’enquête sur les relations entre les Autochtones et certains services
+            publics (commission Viens), nous appelons fermement le gouvernement du Québec à véritablement mettre en œuvre les 142 appels à l'action énoncés dans ce rapport 
+            déposé le 30 septembre 2019.
+            <br/>
+            <br/>
+            Dans son rapport, le commissaire Viens affirme que « de nombreuses lois, politiques, normes ou pratiques institutionnelles 
+            en place sont source de discrimination et d’iniquité au point d’entacher sérieusement la qualité des services offerts aux Premières Nations et aux Inuits ». 
+            Cela l’amène à conclure qu’il lui semble « impossible de nier la discrimination systémique dont sont victimes les membres des Premières Nations et les Inuits ». 
+            <br/>
+            <br/>
+            Nous sommes loin du bilan positif évoqué par le gouvernement même en interprétant de manière très généreuse les appels à l’action qui auraient pu être simplement 
+            « mis en chantier » de manière préliminaire.
+            <br/>
+            <br/>
+            En attendant la mise en place d’un mécanisme de suivi indépendant pour s’assurer de la mise en œuvre du rapport, tel que le propose l’appel à l’action 138, 
+            nous avons décidé de mettre sur pieds bénévolement ce site web qui servira temporairement de guide de référence quant aux actions prises par le gouvernement du Québec.
+            <br/>
+            <br/>
+            Please note that an English version of this website will follow.
+          </p>
+        </section>
+        <div className="side-image"></div>
+        <div className="total-text">
+          <p>NOMBRE DE JOURS DEPUIS LA REMISE DU RAPPORT</p>
+        </div>
+        <div className="total">
+          <h1>{this.dateSinceRemission()}</h1>
+        </div>
+        <section className="stats-banner">
+          <div className="stats">
+            <div className="stat-card">
+              <strong>{stats.notStarted}</strong>
+              <p>EN ATTENTE</p>
             </div>
-          </section>
-          <section className="sections-wrapper">
-            {sections.map((s, i) => {
-              return(
-                <div className="recommendations-wrapper" key={s.name}>
-                  <h1 id={`section${i}`}className="section-title">
-                    {s.name}
-                  </h1>
-                  {s.recommendations.map((r) => {
-                    return (
-                      <div key={r.number} className={`recommendation-card ${this.cardClass(r)}`}>
-                        <h3>APPEL À L'ACTION {r.number}</h3>
-                        <p>{r.text}</p>
-                       
+            <div className="stat-card">
+              <strong>{stats.ongoing}</strong>
+              <p>EN COURS</p>
+            </div>
+            <div className="stat-card">
+              <strong>{stats.unsure}</strong>
+              <p>PAS VRAIMENT EN COURS*</p>
+            </div>
+            <div className="stat-card">
+              <strong>{stats.done}</strong>
+              <p>COMPLÉTÉES</p>
+            </div>
+          </div>
+        </section>
+        <main className="recommendations">
+          <h1>APPELS À L'ACTION</h1>
+          {sections.map((s, i) => {
+            return(
+              <div key={i}>
+                <h1 id={`section${i}`}className="section-title">{s.name}</h1>
+                {s.recommendations.map((r) => {
+                  return(
+                    <div key={r.number} className="r-card">
+                      <p className="r-card-title">{`${r.number}.`}</p>
+                      <p className="r-card-text">{r.text}</p>
+                      <br></br>
                     </div>
                   )
                 })}
-                </div>
-              )
-            })}
-          </section>
+              </div>
+            )
+          })}
+
         </main>
+        <footer/>
       </div>
     );
   }

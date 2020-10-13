@@ -1,19 +1,120 @@
-@import url('https://fonts.googleapis.com/css?family=Oswald');
-@import url('https://fonts.googleapis.com/css?family=Quicksand');
+@import url('https://fonts.googleapis.com/css?family=Lato');
 
-$primary-font: 'Oswald';
-$secondary-font: 'Quicksand';
+
 
 html {
   scroll-behavior: smooth;
 }
 
-main {
-  transition: 0.5s
+footer {
+  height: 100px;
+  grid-column: 1 / -1;
+  background-color: rgb(37, 36, 36);
+  margin-top: 100px;
 }
 
-.App {
-  font-family: $primary-font;
+.grid {
+  display: grid;
+  grid-template-columns: auto 30% 30% auto;
+}
+
+.banner {
+  display: grid;
+  height: 100vh;
+  grid-template-columns: inherit;
+  grid-column: 1/ -1;
+  background-size: cover;
+  background-image: url("./images/ian-wagg-sfyD5fNmDwk-unsplash.jpg");
+
+  h1 {
+    margin-top: 40%;
+    grid-column: 2/3;
+    color: white;
+    font-size: 150px;
+  }
+
+}
+
+.side-image {
+  grid-column: 3;
+  height: 600px;
+  width: 400px;
+  margin: -100px 0 0 50px;
+  background-color: gray;
+}
+
+.a-propos {
+  grid-column: 2/3;
+  font-family: Lato;
+  padding-right: 55px;
+  color: #474541;
+  font-size: 1.02rem;
+  text-align: left;
+}
+
+.total-text {
+  grid-column: 2/3;
+  margin: 100px 0 100px 50px;
+  width: 600px;
+  font-size: 3.5rem;
+  font-family: 'Libre Franklin';
+  font-weight: bold;
+}
+
+.total {
+  position: relative;
+  grid-column: 3/4;
+  height: 270px;
+  width: 270px;
+  border-radius: 150px;
+  margin: 100px 0 0 130px;
+  background-color: lightgray;
+
+  h1 {
+    font-size: 6rem;
+    position: absolute;
+    left: 55px;
+    bottom: 30px;
+    margin-bottom: 0;
+  }
+}
+
+
+.stats-banner {
+  margin-top: 100px;
+  display: grid;
+  grid-template-columns: inherit;
+  grid-column: 1/5;
+  background-color:rgb(240, 238, 238);
+  height: 400px;
+}
+
+.stats {
+  display: flex;
+  flex-direction: row;
+  grid-column: 2/4;
+  margin-top: -80px;
+}
+
+.stat-card {
+  padding-top: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 400px;
+  width: 25%;
+
+  strong {
+    font-size: 3em;
+  }
+
+  p {
+    font-family: 'Libre Franklin';
+    font-weight: bolder;
+    font-size: 1.7em;
+    text-align: center;
+  }
+
 }
 
 .section-links {
@@ -30,8 +131,8 @@ main {
   justify-content: center;
   height: 100vh;
   width: 0;
+  background-color: white;
   overflow: hidden;
-  font-family: $secondary-font;
   position: fixed;
   left: 0;
   top: 0;
@@ -48,9 +149,10 @@ main {
 }
 
 .opens {
-  width: 20%;
+  width: 19%;
 }
 .sections-wrapper {
+  grid-column: 1/4;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -58,47 +160,35 @@ main {
   transition: margin-left 0.5s;
 }
 
-.recommendations-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  max-width: 50%;
-}
-
-.recommendation-card {
-  margin-bottom: 15px;
-  cursor: pointer;
-
-  &:hover{
-
-  }
-
-  h3 {
-    font-size: 25px;
-  }
+.recommendations {
+  grid-column: 2/4;
   
-
-  p {
-    font-family: $secondary-font;
-    font-size: 18px;
-  }
-
-  li {
-    font-family: $secondary-font;
-    font-size: 16px;
-    color: #444444;
-    margin-bottom: 10px;
-
-  }
 }
 
-.section-title{
-  align-self: center;
-  color: #5a5959;
-  font-size: 20px;
-  text-transform: uppercase;
-  margin-top: 100px;
+.section-title {
+  grid-column: 2/4;
+  font-size: 3.3em;
+  font-family: 'Libre Franklin';
 }
+
+.r-card {
+  position: relative;
+  padding-left: 100px;
+  color: #474541;
+
+}
+
+.r-card-title {
+  font-size: 1.3em;
+  font-weight: bold;
+  font-family: 'Libre Franklin';
+}
+
+.r-card-text {
+  font-size: 1.2em;
+  font-family: 'Lato';
+}
+
 
 span {
   display:block;
@@ -205,58 +295,5 @@ span {
 }
 
 .sidebar-open {
- margin-left: 20%;
-}
-
-.mission {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-  background-image: url("./images/ian-wagg-sfyD5fNmDwk-unsplash.jpg");
-  background-size: cover;
-  overflow: hidden;
-
-  h1 {
-    color: white;
-    font-size: 100px;
-    letter-spacing: 0.1rem;
-  }
-}
-
-.stats-wrapper {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-}
-
-.stats-grid {
-  width: 70%;
-  height: 70%;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-}
-
-.stats-card {
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.ongoing {
-  color: rgb(216, 158, 51)
-}
-
-.done {
-  color: rgba(37, 146, 37, 0.719)
-}
-
-.not-started {
-  color: #444444
+ margin-left: 14%;
 }
