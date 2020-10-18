@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import './style/App.scss';
 import { Hamburger } from './components/Hamburger';
-import { Link } from 'react-router-dom';
+import { Stats } from './components/Stats';
+
+import logoHeader from "./style/images/CERP142_LogoHeader.svg"
+import logoMain from "./style/images/CERP142_LogoPrincipal.svg"
+import logoAPropos from "./style/images/CERP142_APropos.svg"
+import logoAppels from "./style/images/CERP142_AppelsAction.svg"
+
 
 export default class App extends Component {
 
@@ -11,6 +17,7 @@ export default class App extends Component {
       open: false,
       isLoading: false,
       stats: {},
+      popup:false,
       sections: []
     }
 
@@ -37,7 +44,6 @@ export default class App extends Component {
     }
 
     return response;
-
   }
 
   handleHamClick = () => {
@@ -52,8 +58,6 @@ export default class App extends Component {
     fetch(`https://cerp142-api.herokuapp.com/stats`)
       .then((res) => res.json())
       .then((data) => this.setState({stats: data.stats}))
-
-    
   }
 
   componentDidMount() {
@@ -61,6 +65,13 @@ export default class App extends Component {
     this.setState({isLoading:true})
     this.fetchData()
       .then(() => this.setState({isLoading: false}))
+  }
+
+
+  togglePop = () => {
+    this.setState({
+      popup: !this.state.popup
+    })
   }
 
   render () {
@@ -73,22 +84,28 @@ export default class App extends Component {
 
     const sections = this.state.sections;
     const stats = this.state.stats;
-    console.log(this.state.sections)
+    
     return (
       <div className="App grid">
         <div id="side" className={`sidebar ${this.state.open ? "opens" : ""}`}>
           <div className="section-links">
+            <a href="#Apropos">À propos</a>
+            <div className="line"></div>
             {sections.map((s, i) => {
               return(
                 <a href={`#section${i}`} key={i}>{s.name}</a>
               )
             })}
+            <div className="line"></div>
           </div>
         </div>
         <div className="banner">
+          <img className="logo-header" src={logoHeader} alt="logoHeader"/>
+          <img className="logo-main" src={logoMain} alt="logoMain"/>
         </div>
         <Hamburger handleHamClick={() => this.handleHamClick()}/>
-        <section className="a-propos">
+        <section id="Apropos" className="a-propos">
+          <img className="logo-a-propos" src={logoAPropos} alt="logoAPropos"></img>
           <p>
             En tant que regroupement formé d’anciens membres de l’équipe de la Commission d’enquête sur les relations entre les Autochtones et certains services
             publics (commission Viens), nous appelons fermement le gouvernement du Québec à véritablement mettre en œuvre les 142 appels à l'action énoncés dans ce rapport 
@@ -111,35 +128,16 @@ export default class App extends Component {
             Please note that an English version of this website will follow.
           </p>
         </section>
-        <div className="side-image"></div>
+        <div id="floater" className="side-image"></div>
         <div className="total-text">
           <p>NOMBRE DE JOURS DEPUIS LA REMISE DU RAPPORT</p>
         </div>
         <div className="total">
           <h1>{this.dateSinceRemission()}</h1>
         </div>
-        <section className="stats-banner">
-          <div className="stats">
-            <div className="stat-card">
-              <strong>{stats.notStarted}</strong>
-              <p>EN ATTENTE</p>
-            </div>
-            <div className="stat-card">
-              <strong>{stats.ongoing}</strong>
-              <p>EN COURS</p>
-            </div>
-            <div className="stat-card">
-              <strong>{stats.unsure}</strong>
-              <p>PAS VRAIMENT EN COURS*</p>
-            </div>
-            <div className="stat-card">
-              <strong>{stats.done}</strong>
-              <p>COMPLÉTÉES</p>
-            </div>
-          </div>
-        </section>
+        <Stats stats={stats}/>
         <main className="recommendations">
-          <h1>APPELS À L'ACTION</h1>
+          <img className="logo-appels" src={logoAppels} alt="logoAppels"></img>
           {sections.map((s, i) => {
             return(
               <div key={i}>
@@ -156,11 +154,9 @@ export default class App extends Component {
               </div>
             )
           })}
-
         </main>
         <footer/>
       </div>
     );
   }
-
 }

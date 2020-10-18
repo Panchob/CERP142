@@ -5,7 +5,7 @@ export class SameStatus extends Component {
     super()
     this.state = {
       recommendations: [],
-      status: props.location.state.status,
+      status: props.status,
       isLoading: true
     }
   }
@@ -20,18 +20,6 @@ export class SameStatus extends Component {
     
   }
 
-  statusTitle() {
-    const status = this.state.status
-    if(status === "done") {
-      return("TERMINÉES")
-    
-    } else if(status === "ongoing")
-    {
-      return("EN COURS")
-    } else {
-      return("PAS COMMENCÉES")
-    }
-  }
 
   render() {
 
@@ -46,11 +34,11 @@ export class SameStatus extends Component {
     console.log(this.state.recommendations)
     return(
       <div className="sections-wrapper">
-        <h1>ACTIONS {this.statusTitle()}</h1>
+        <h1>ACTIONS</h1>
         <div className="recommendations-wrapper">
           {this.state.recommendations.map((r) => {
             return (
-              <div key={r.number} className={`recommendation-card`}>
+              <div key={r.number}>
                 <h3>APPEL À L'ACTION {r.number}</h3>
                 <p>{r.text}</p>
               </div>
