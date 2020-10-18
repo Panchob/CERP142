@@ -37,13 +37,6 @@ footer {
   background-size: cover;
   background-image: url("./images/ian-wagg-sfyD5fNmDwk-unsplash_dark.jpg");
 
-  h1 {
-    margin-top: 40%;
-    grid-column: 2/3;
-    color: white;
-    font-size: 150px;
-  }
-
 }
 
 .logo-header {
@@ -79,7 +72,7 @@ height: 175px;
   font-family: Lato;
   padding-right: 55px;
   color: #474541;
-  font-size: 1.02rem;
+  font-size: 1.2rem;
   text-align: left;
   min-width: 400px;
   
@@ -229,6 +222,43 @@ height: 175px;
   font-family: 'Lato';
 }
 
+.circle {
+  height: 20px;
+  width: 20px;
+  border-radius: 15px;
+  position: absolute;
+  top: 7px;
+  left: 15px;
+}
+
+.notStarted {
+  background-color: rgb(160, 160, 160);
+} 
+
+.done {
+  background-color: rgb(111, 155, 95);
+} 
+
+.unsure {
+  background-color: rgb(244, 112, 81);
+}
+
+.ongoing {
+  background-color: rgb(249, 195, 75);
+}
+
+.small-line {
+  border-bottom: 1px solid black;
+  width: 4%;
+  position: absolute;
+  top: 16px;
+  left: 26px
+}
+
+.note {
+  grid-column: 2;
+  margin-top: 5px;
+}
 
 span {
   display:block;

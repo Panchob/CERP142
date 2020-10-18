@@ -136,6 +136,7 @@ export default class App extends Component {
           <h1>{this.dateSinceRemission()}</h1>
         </div>
         <Stats stats={stats}/>
+        <small className="note">* Selon nos sources</small>
         <main className="recommendations">
           <img className="logo-appels" src={logoAppels} alt="logoAppels"></img>
           {sections.map((s, i) => {
@@ -145,6 +146,8 @@ export default class App extends Component {
                 {s.recommendations.map((r) => {
                   return(
                     <div key={r.number} className="r-card">
+                      <div className={`circle ${r.status}`}></div>
+                      <div className="small-line"></div>
                       <p className="r-card-title">{`${r.number}.`}</p>
                       <p className="r-card-text">{r.text}</p>
                       <br></br>
